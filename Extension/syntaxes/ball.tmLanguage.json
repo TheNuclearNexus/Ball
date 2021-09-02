@@ -1,0 +1,38 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Ball",
+	"patterns": [
+		{
+			"name": "constant.character.modify-value.ball",
+			"match": "[+\\-]"
+		},
+		{
+			"name":"constant.character.modify-pointer.ball",
+			"match": "[lLrR]"
+		},
+		{
+			"name":"invalid",
+			"match": "[\\$]"
+		},
+		{
+			"name": "keyword.control.ball",
+			"match": "[vV<>^\\\\/]"
+		},
+		{
+			"name": "entity.name.function.io.ball",
+			"match": "[a-zA-Z]"
+		},
+		{
+			"name": "string.quoted.triple",
+			"begin": "\"\"\"",
+			"end": "\"\"\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ball",
+					"match": "\\\\."
+				}
+			]
+		}
+	],
+	"scopeName": "source.ball"
+}

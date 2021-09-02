@@ -1,0 +1,25 @@
+{
+    "name": "ball-language-support",
+    "displayName": "Ball Language Support",
+    "description": "Syntax highlighting for ball",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.59.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ball",
+            "aliases": ["Ball", "ball"],
+            "extensions": [".ball"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ball",
+            "scopeName": "source.ball",
+            "path": "./syntaxes/ball.tmLanguage.json"
+        }]
+    }
+}

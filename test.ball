@@ -1,0 +1,34 @@
+v          """Get First #"""
+>---R QR G L ++++++  > R -------- L - \v
+      v              ^                 <
+           """Get Second #"""         $
+      >RRGR  ++++++  > L -------- R - \v
+                     ^                 <
+                                            
+                                       """Copy c3 to c4,c5"""    """Copy c5 to c3"""
+                                      > L > - R+R+ LL\v >RR      > - LL+RR \v  
+                                                     >  ^        ^          <
+                                                                 """Decrement c2"""
+                                          ^           <            R/-  LLL<
+                                                                    R
+                                                                    R
+                                                                    
+                                                                 """ Copy c4 to c1 """
+                                                                    > - LLL + RRR\v
+                                                                    ^             <
+v                                                                                <
+     """ Move to c9 """
+> RRRRR v
+v       <
+               """  ' '     'B'      'A'      'L'       'L'        'S' """
+> +++++ +++++ > - R +++ R ++++++ R ++++++ R +++++++ R +++++++ R ++++++++ LLLLLL v
+              ^/                                                                <
+               >  R ++  R ++++++ R +++++  R ++++++  R ++++++  R +++ LLLLLL      v
+                                                            """ Return to c0"""
+                                                                  v L --- / +++ <
+                                                                  >             ^
+v                                                                     --- <
+> R P RRRRRRRR   > R C \v
+                 ^      <
+                       D
+                       $
