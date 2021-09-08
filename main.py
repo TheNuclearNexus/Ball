@@ -2,20 +2,11 @@ from helper import getMemoryString
 import io, os, time, sys, colorama, re
 from colorama import Fore
 from typing import List, Tuple
-from debug import setSyncData, startServer
+from debug import setSyncData, startServer, stopServer, createGrid
+from random import random
 
 grid: List[str] = []
-def createGrid(path: str):
-    global grid
-    grid = open("test.ball").readlines()
 
-    max = 0
-    for l in grid:
-        if len(l) > max:
-            max = len(l)
-
-    for l in range(len(grid)):
-        grid[l] = list((grid[l] + (' ' * (max - len(grid[l])))).replace('\n',''))
 
     # print(f'Ball: {ball.x}, {ball.y}')
 
@@ -129,6 +120,8 @@ class Ball:
                 self.dumbMemory()
         elif cell == 'q':
             balls.append(Ball(self.x, self.y+1, self.pointer))
+        elif cell == '?':
+            memory[self.pointer] = int(random()*256)
 
     def update(self):
         self.parseCell()
@@ -167,17 +160,23 @@ def loop(debug: bool = False, speed: float = 0):
         #     os.system("cls")
         # printGrid(balls)
         setSyncData({
-            'grid': grid,
+            'grid': os.path.join(os.getcwd(), file),
             'balls': getCoords(),
             'memory': memory,
             'pointers': getPointers()
         })
         time.sleep(speed)
     print(Fore.GREEN + 'Exited Successfully!')
+    stopServer()
+
 debug = False
+file = ''
 def main():
     global debug
-    file = ''
+    global memory
+    global memoryLength
+    global file
+    
     speed = 0
     for i in range(len(sys.argv)):
         if sys.argv[i] == '-d' or sys.argv == '--debug':
@@ -188,12 +187,16 @@ def main():
         elif sys.argv[i] == '-s' or sys.argv == '--speed':
             i += 1
             speed = float(sys.argv[i])
+        elif sys.argv[i] == '-m' or sys.argv == '--memory':
+            i += 1
+            memoryLength = int(sys.argv[i])
+            memory = [0 for i in range(memoryLength)]
             
     if debug:
-        speed = 1/30
         startServer()
     
-    createGrid(file)
+    global grid
+    grid = createGrid(file)
     loop(debug, speed)
 
 if __name__ == '__main__':

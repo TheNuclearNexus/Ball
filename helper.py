@@ -10,20 +10,20 @@ def getGridString(grid: List[List[str]], balls: List[Tuple[int, int]]):
             found = False
             for ball in balls:
                 if ball[0] == x and ball[1] == y:
-                    line += Fore.GREEN + 'B' + Fore.RESET
+                    line += Fore.LIGHTGREEN_EX + '●' + Fore.RESET
                     found = True
                     break
             
             if not found:
                 cell = grid[y][x]
                 if re.search('[\^vV<>/\\\\]$', cell):
-                    line += Fore.CYAN + cell + Fore.RESET
+                    line += Fore.LIGHTBLUE_EX + cell + Fore.RESET
                 elif re.search('[+\- lL rR]$', cell):
                     line += Fore.MAGENTA + cell + Fore.RESET
                 elif re.search('[dD cC pP gG qQ]$', cell):
-                    line += Fore.YELLOW + cell + Fore.RESET
+                    line += Fore.LIGHTYELLOW_EX + cell + Fore.RESET
                 elif re.search('[\$]$', cell):
-                    line += Fore.RED + cell + Fore.RESET
+                    line += Fore.LIGHTRED_EX + cell + Fore.RESET
                 else:
                     line += Fore.WHITE + cell + Fore.RESET
                 
@@ -38,9 +38,21 @@ def getMemoryString(memory: List[int], pointers: List[int]):
             lines += prefix + str(memory[i]) + ' '
         else:
             lines += f'{Fore.CYAN}{prefix}{memory[i]}{Fore.RESET}' + ' '
-        if (i + 1) % 16 == 0:
+        if (i + 1) % 32 == 0:
             lines += '\n'
         elif (i + 1) % 4 == 0:
             lines += '\t'
     return lines
+
+def createGrid(path: str):
+    grid = open(path).readlines()
+
+    max = 0
+    for l in grid:
+        if len(l) > max:
+            max = len(l)
+
+    for l in range(len(grid)):
+        grid[l] = list((grid[l] + (' ' * (max - len(grid[l])))).replace('\n',''))
+    return grid
     

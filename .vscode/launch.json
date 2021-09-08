@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "module": "main",
-            "args": ["-i","${file}", "-d"]
+            "args": ["-i","${file}", "-d", "-m","1024","-s","0.01"]
         }
     ]
 }

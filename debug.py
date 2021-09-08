@@ -1,19 +1,23 @@
 from typing import List
-from helper import getGridString, getMemoryString
+from helper import getGridString, getMemoryString, createGrid
 from socketserver import *
 import socket
 import json
 import time
 import threading
 import os
+import sys
 
-HOST, PORT = "10.48.124.248", 42069
+HOST, PORT = "localhost", 9999
 
 syncData = {
-    'grid': [],
+    'grid': '',
     'balls': [],
     'memory': []
 }
+
+init = True 
+
 def setSyncData(data):
     global syncData
     syncData = data
@@ -31,7 +35,17 @@ class DebugHandler(BaseRequestHandler):
         # Echo the back to the client
         data = json.loads(self.request.recv(1024))
         
+        global init
+        if init:
+            syncData["init"] = True
+            init = False
+        else:
+            syncData["init"] = False
+
         if data["type"] == 'sync':
+            syncData["init"] = True
+            self.request.send(bytes(json.dumps(syncData), 'ascii'))
+        elif data["type"] == 'update':
             self.request.send(bytes(json.dumps(syncData), 'ascii'))
         else:
             self.request.send(b'Invalid Type')
@@ -43,19 +57,25 @@ class DebugHandler(BaseRequestHandler):
 class DebugServer(TCPServer):
     pass
 
+debugServer = None
 def __startServer():
     # Create the server, binding to localhost on port 9999
     with DebugServer((HOST, PORT), DebugHandler) as server:
         # Activate the server; this will keep running until you
         # interrupt the program with Ctrl-C
+        global debugServer
+        debugServer = server
         print('Server started')
-        server.serve_forever()
+        debugServer.serve_forever()
+        
 thread = None
 def startServer():
     global thread
     thread = threading.Thread(target=__startServer)
     thread.start()
-
+def stopServer():
+    debugServer.shutdown()
+    
 
 class RequestType:
     SYNC = 'sync'
@@ -67,24 +87,35 @@ class Client:
             try:
                 sock.connect((HOST, PORT))
                 sock.sendall(bytes(json.dumps({'type':type}), 'ascii'))
-                response = str(sock.recv(1024*16), 'ascii')
+                response = str(sock.recv(1024*64), 'ascii')
                 return json.loads(response)
             except Exception as err:
                 print('Waiting...', '',end='\r')
                 return None
+
     def __init__(self):
         syncData = self.request(RequestType.SYNC)
+        self.syncData = syncData
+        self.grid = []
 
     def update(self):
-        syncData = self.request(RequestType.SYNC)
-        if syncData != None:
+        syncData = self.request(RequestType.UPDATE)
+        if syncData != None and syncData != self.syncData:
+            self.syncData = syncData
+
+            if syncData["init"] == True:
+                self.grid = createGrid(syncData["grid"])
+
             os.system("cls")
-            print('\n'*50)
-            content = getGridString(syncData["grid"], syncData["balls"])
+            content = getGridString(self.grid, syncData["balls"])
+
             content += '\n\n\n\n'
             content += getMemoryString(syncData["memory"], syncData["pointers"])
 
-            print(content, '', end='\r'*(len(content.split('\n'))))
+            lineCount = len(content.split('\n')) 
+            # print('\n'*lineCount*4)
+            sys.stdout.write(content + ('\r'*(lineCount)))
+            sys.stdout.flush()
 
 
 
@@ -93,4 +124,4 @@ if __name__ == '__main__':
     c = Client()
     while True:
         c.update()
-        time.sleep(1/30)
+        time.sleep(1/120)

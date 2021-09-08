@@ -20,7 +20,7 @@
 		},
 		{
 			"name": "entity.name.function.io.ball",
-			"match": "[a-zA-Z]"
+			"match": "[a-zA-Z\\?]"
 		},
 		{
 			"name": "string.quoted.triple",

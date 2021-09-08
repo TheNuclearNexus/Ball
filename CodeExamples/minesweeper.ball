@@ -1,0 +1,54 @@
+>vv
+.        """Store a new line"""          """    '.'     '0'      '1'      '2'      '3'      '4'      '5'      '6'      '7'      '8'      '9' """
+.                                          v                                                                                                                   < 
+. > --- R    +++++ +++++ ++  R +++++ +++++ > R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   R+++++   LLLLLLLLLLL - \^
+.                                          > R++++++  R--      R-       R        R+       R++      R+++     R++++    R+++++   R++++++  R+++++++v    
+.                                          ^                                                                                                                  <
+.v                                                                                             L ++++ ++++ ++++ ++++ R---RRRR RRRR RRRR RRRR RR<
+.
+.
+.
+.
+.> --- RRRR RRRR RRRR RRRR RRRR RRRR RRRR RR --- R v
+.v                                                 <
+.v\-$LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL LLLL L                                               >LLL    > L +++ \ --- v
+."""1    2    3    4    5    6    7    8    9   10  11  12  13  14  15  16"""                                                           ^             <
+.>R QRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRRQRRRR---R ++++ ++++ ++++ ++++ R +++++ +++++ L   >/v              -
+.   v    <    <    <    <    <    <    <    <    <    <    <    <    <    <    <                                               ^ <              - 
+.    ?                                                                                                                                          -
+
+.   >+++++RR++++LLv
+.   v             <                                                                                                      
+.    """ Do modulus on each cell """       
+.   v       <         
+.   >-R+R-v           
+.   v/    <> RRR> \-v 
+.   > LL   /^   ^   < 
+.    >R+LL>-R+L\v     
+.         ^     <     
+.   ^         R<      
+v                 <   
+ """ Clean up the remaining divisor for later """
+> L > \-v
+    ^   <
+v    R<
+ """ Pad forward 64 bytes to avoid modifying running modulos """
+>   RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRRv     
+v   RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR<    
+ """ Use a seeker to get to the "lock" variable"""  
+> +++ \ --- L v
+^             <
+        """ Remove on from the "lock" variable """ 
+.     > --- R -PRC $
+.v                                                                                                                                             R<   
+.                          
+.
+.v                     --- <
+.> R \v  > R \ -\v > L +++ / --- v
+.^    <  ^   <   > ^             <
+.    >L+ ^      >   > L +++ / --- v
+.                   ^             <
+.                           >G--- > R \v
+.                                 ^    <
+.        ^                          +G<
+.
